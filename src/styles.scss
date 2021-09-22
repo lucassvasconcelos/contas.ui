@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import '~ngx-toastr/toastr-bs4-alert';
 
 html, 
 body {
@@ -15,4 +16,18 @@ h4,
 h5,
 h6 {
     font-family: 'Poppins', sans-serif;
+}
+
+.page-title {
+    font-size: 35px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.modal-paddings {
+    padding: 50px;
+}
+
+.required {
+    color:red;
 }

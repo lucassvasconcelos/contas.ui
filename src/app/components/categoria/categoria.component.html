@@ -1,0 +1,41 @@
+<div class="modal-paddings">
+    <div [ngSwitch]="isUpdate">
+        <h4 *ngSwitchCase="false">Nova Categoria</h4>
+        <h4 *ngSwitchCase="true">Editar Categoria</h4>
+    </div>
+
+    <form (ngSubmit)="salvar()" [formGroup]="categoriaFormGroup" novalidate>
+
+        <div class="alert alert-danger" *ngIf="errosValidacao.length > 0">
+            <h3>Oops! Ocorreu um erro ao salvar</h3>
+
+            <ul>
+                <li *ngFor="let erro of errosValidacao">{{ erro }}</li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Nome <strong class="required">*</strong></label>
+            <input type="text" class="form-control" id="nome" aria-describedby="nome" placeholder="Nome da Categoria"
+                formControlName="nome" required>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição <strong class="required">*</strong></label>
+            <input type="text" class="form-control" id="descricao" aria-describedby="descricao"
+                placeholder="Descrição da Categoria" formControlName="descricao" required>
+        </div>
+        <div class="form-group">
+            <label for="tipo">Tipo <strong class="required">*</strong></label>
+            <select name="tipo" id="tipo" class="form-control" formControlName="tipo" required>
+                <option value="" selected disabled>Selecione</option>
+                <option value="1">Ativo</option>
+                <option value="2">Passivo</option>
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-link mr-2" (click)="close()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!categoriaFormGroup.valid">Salvar</button>
+        </div>
+    </form>
+</div>

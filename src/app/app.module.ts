@@ -1,16 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
+import { NgbDateCustomAdapter } from './common/ngb-date-custom-adapter';
+import { NgbDateCustomDateParserFormatter } from './common/ngb-date-custom-formatter';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ContasComponent } from './pages/contas/contas.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
 import { RelatoriosComponent } from './pages/relatorios/relatorios.component';
+import { CriacaoContaComponent } from './components/conta/conta.component';
+import { DelecaoContaComponent } from './components/delecao-conta/delecao-conta.component';
+import { CriacaoCategoriaComponent } from './components/categoria/categoria.component';
+import { DelecaoCategoriaComponent } from './components/delecao-categoria/delecao-categoria.component';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -19,15 +33,26 @@ import { RelatoriosComponent } from './pages/relatorios/relatorios.component';
     FooterComponent,
     ContasComponent,
     CategoriasComponent,
-    RelatoriosComponent
+    RelatoriosComponent,
+    CriacaoContaComponent,
+    DelecaoContaComponent,
+    CriacaoCategoriaComponent,
+    DelecaoCategoriaComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    FontAwesomeModule,
+    HttpClientModule,
     NgbModule,
-    FontAwesomeModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: NgbDateAdapter, useClass: NgbDateCustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: NgbDateCustomDateParserFormatter }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
