@@ -1,1 +1,48 @@
-<p>categorias works!</p>
+<div class="d-flex align-items-center mb-4">
+    <div>
+        <h1 class="page-title">Categorias</h1>
+    </div>
+    <div class="ml-3">
+        <button class="btn btn-primary" (click)="criarCategoria()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+    </div>
+</div>
+<div class="table-responsive table-scroll">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Tipo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let categoria of categorias">
+                <td>{{ categoria.nome }}</td>
+                <td>{{ categoria.descricao }}</td>
+                <td>{{ tiposCategoria[categoria.tipo] }}</td>
+                <td class="text-right">
+                    <button class="btn btn-sm btn-primary mr-2" (click)="editarCategoria(categoria)">
+                        <fa-icon [icon]="faPencil"></fa-icon>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="deletarCategoria(categoria)">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="mt-2">
+    <strong>Quantidade: {{ categorias.length }} {{ categorias.length === 1 ? 'categoria' : 'categorias' }}</strong>
+</div>
+
+<ng-template #modalCategoria>
+    <app-categoria [categoria]="categoriaSelecionada" (closeEvent)="dismissAll()"></app-categoria>
+</ng-template>
+
+<ng-template #modalDelecaoCategoria>
+    <app-delecao-categoria [categoria]="categoriaSelecionada" (closeEvent)="dismissAll()"></app-delecao-categoria>
+</ng-template>
