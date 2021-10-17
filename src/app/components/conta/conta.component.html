@@ -1,0 +1,82 @@
+<div class="modal-paddings">
+    <div [ngSwitch]="isUpdate">
+        <h4 *ngSwitchCase="false">Nova Conta</h4>
+        <h4 *ngSwitchCase="true">Editar Conta</h4>
+    </div>
+
+    <form (ngSubmit)="salvar()" [formGroup]="contaFormGroup" novalidate>
+
+        <div class="alert alert-danger" *ngIf="errosValidacao.length > 0">
+            <h3>Oops! Ocorreu um erro ao salvar</h3>
+
+            <ul>
+                <li *ngFor="let erro of errosValidacao">{{ erro }}</li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Nome <strong class="required">*</strong></label>
+            <input type="text" class="form-control" id="nome" aria-describedby="nome" placeholder="Nome da Conta"
+                formControlName="nome" required>
+        </div>
+
+        <div class="form-group">
+            <label for="data">Data <strong class="required">*</strong></label>
+            <div class="input-group">
+                <input class="form-control" placeholder="Data da Conta" name="dp" formControlName="data" ngbDatepicker
+                    #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                        <fa-icon [icon]="faCalendar"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="valor">Valor <strong class="required">*</strong></label>
+            <input type="text" class="form-control" id="valor" aria-describedby="valor" placeholder="Valor da Conta"
+                formControlName="valor" required>
+        </div>
+
+        <div class="d-flex mb-3">
+            <div class="mr-2">
+                <span>Parcelado <strong class="required">*</strong></span>
+            </div>
+
+            <div class="custom-control custom-switch ml-2">
+                <input type="checkbox" name="parcelado" id="customSwitches" formControlName="parcelado"
+                    class="custom-control-input">
+                <label class="custom-control-label" for="customSwitches"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="numeroParcelas">Número de Parcelas <strong class="required"
+                    *ngIf="contaFormGroup.get('parcelado')?.value">*</strong></label>
+            <input type="number" class="form-control" id="numeroParcelas" aria-describedby="numeroParcelas"
+                placeholder="Número de Parcelas da Conta" formControlName="numeroParcelas"
+                [required]="contaFormGroup.get('parcelado')?.value"
+                [readonly]="!(contaFormGroup.get('parcelado')?.value)">
+        </div>
+
+        <div class="form-group">
+            <label for="categoria">Categoria <strong class="required">*</strong></label>
+            <select name="categoria" id="categoria" class="form-control" formControlName="idCategoria" required>
+                <option value="" selected disabled>Selecione</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="observacao">Observações</label>
+            <textarea name="observacao" id="observacao" cols="30" rows="5" class="form-control"
+                formControlName="observacao"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-link mr-2" (click)="close()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!contaFormGroup.valid">Salvar</button>
+        </div>
+    </form>
+</div>

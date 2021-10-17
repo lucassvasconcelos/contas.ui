@@ -6,12 +6,9 @@ import { faCoins } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   public faCoins: any = faCoins;
 
   public constructor() { }
-
-  public ngOnInit(): void {
-  }
 
 }
