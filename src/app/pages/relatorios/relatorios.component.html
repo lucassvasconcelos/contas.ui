@@ -3,3 +3,19 @@
         <h1 class="page-title">Relatórios</h1>
     </div>
 </div>
+
+<div class="d-flex justify-content-between">
+    <div class="totalizador totalizador-success d-flex flex-column align-items-center">
+        <span>Receitas</span>
+        <span>{{ totalizadores?.totalReceitas | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+    </div>
+    <div class="totalizador totalizador-danger d-flex flex-column align-items-center">
+        <span>Despesas</span>
+        <span>{{ totalizadores?.totalDespesas | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+    </div>
+    <div class="totalizador d-flex flex-column align-items-center"
+        [ngClass]="{'totalizador-success': (totalizadores && (totalizadores.total > 0 || totalizadores.total === 0)), 'totalizador-danger': (totalizadores && totalizadores.total < 0)}">
+        <span>Total</span>
+        <span>{{ totalizadores?.total | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
+    </div>
+</div>
