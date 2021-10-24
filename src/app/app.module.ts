@@ -10,10 +10,12 @@ import localePt from '@angular/common/locales/pt';
 import { NgbDateAdapter, NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppComponent } from './app.component';
 import { NgbDateCustomAdapter } from './common/ngb-date-custom-adapter';
 import { NgbDateCustomDateParserFormatter } from './common/ngb-date-custom-formatter';
+import { MonthDatePickerComponent } from './components/month-datepicker/month-datepicker.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ContasComponent } from './pages/contas/contas.component';
@@ -23,7 +25,6 @@ import { CriacaoContaComponent } from './components/conta/conta.component';
 import { DelecaoContaComponent } from './components/delecao-conta/delecao-conta.component';
 import { CriacaoCategoriaComponent } from './components/categoria/categoria.component';
 import { DelecaoCategoriaComponent } from './components/delecao-categoria/delecao-categoria.component';
-import { MonthDatePickerComponent } from './components/month-datepicker/month-datepicker.component';
 
 registerLocaleData(localePt);
 
@@ -50,7 +51,8 @@ registerLocaleData(localePt);
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgxChartsModule
   ],
   providers: [
     { provide: NgbDateAdapter, useClass: NgbDateCustomAdapter },

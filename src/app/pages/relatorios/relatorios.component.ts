@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LegendPosition } from '@swimlane/ngx-charts';
+import { GraficosModel } from 'src/app/models/relatorios/graficos-model';
 import { TotalizadoresModel } from 'src/app/models/relatorios/totalizadores-model';
 import { TotalizadoresQuery } from 'src/app/services/queries/relatorios/totalizadores-query';
 import { RelatorioService } from 'src/app/services/relatorio.service';
@@ -12,6 +14,9 @@ import { RelatorioService } from 'src/app/services/relatorio.service';
 export class RelatoriosComponent implements OnInit {
   public totalizadores!: TotalizadoresModel;
   public relatorioForm!: FormGroup;
+
+  public dadosValorTotalPorCategoria: GraficosModel[] = [];
+  public legendPosition = LegendPosition;
 
   private mesSelecionado: number = 0;
   private anoSelecionado: number = 0;
@@ -33,10 +38,22 @@ export class RelatoriosComponent implements OnInit {
     this.init(this.mesSelecionado, this.anoSelecionado);
   }
 
-  public init(mes: number, ano: number): void {
-    this.relatorioService.obterTotalizadores(new TotalizadoresQuery(mes, ano)).subscribe((response) => {
-      this.totalizadores = TotalizadoresModel.toModel(response);
+  private async init(mes: number, ano: number): Promise<void> {
+    await this.obterDados(mes, ano).then(() => {
     });
+  }
+
+  private async obterDados(mes: number, ano: number): Promise<any> {
+    return Promise.all([
+      this.relatorioService.obterTotalizadores(new TotalizadoresQuery(mes, ano)).toPromise()
+        .then((response) => {
+          this.totalizadores = TotalizadoresModel.toModel(response);
+        }),
+      this.relatorioService.obterValorTotalPorCategoria(new TotalizadoresQuery(mes, ano)).toPromise()
+        .then((response) => {
+          this.dadosValorTotalPorCategoria = response;
+        })
+    ]);
   }
 
   public atualizarRelatorios(): void {

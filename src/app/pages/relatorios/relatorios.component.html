@@ -25,3 +25,8 @@
         <span>{{ totalizadores?.total | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
     </div>
 </div>
+<div class="mt-5">
+    <ngx-charts-pie-chart [results]="dadosValorTotalPorCategoria" [legend]="true" [legendTitle]="'Legenda'"
+        [view]="[1000,500]" [labels]="true" [legendPosition]="legendPosition.Below" [gradient]="true">
+    </ngx-charts-pie-chart>
+</div>
