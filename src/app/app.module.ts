@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -23,6 +23,7 @@ import { CriacaoContaComponent } from './components/conta/conta.component';
 import { DelecaoContaComponent } from './components/delecao-conta/delecao-conta.component';
 import { CriacaoCategoriaComponent } from './components/categoria/categoria.component';
 import { DelecaoCategoriaComponent } from './components/delecao-categoria/delecao-categoria.component';
+import { MonthDatePickerComponent } from './components/month-datepicker/month-datepicker.component';
 
 registerLocaleData(localePt);
 
@@ -37,13 +38,15 @@ registerLocaleData(localePt);
     CriacaoContaComponent,
     DelecaoContaComponent,
     CriacaoCategoriaComponent,
-    DelecaoCategoriaComponent
+    DelecaoCategoriaComponent,
+    MonthDatePickerComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
     FontAwesomeModule,
+    FormsModule,
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,

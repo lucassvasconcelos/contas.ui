@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TotalizadoresModel } from 'src/app/models/relatorios/totalizadores-model';
 import { TotalizadoresQuery } from 'src/app/services/queries/relatorios/totalizadores-query';
 import { RelatorioService } from 'src/app/services/relatorio.service';
@@ -10,11 +11,21 @@ import { RelatorioService } from 'src/app/services/relatorio.service';
 })
 export class RelatoriosComponent implements OnInit {
   public totalizadores!: TotalizadoresModel;
+  public relatorioForm!: FormGroup;
 
-  public constructor(private relatorioService: RelatorioService) { }
+  public constructor(
+    private formBuilder: FormBuilder,
+    private relatorioService: RelatorioService
+  ) { }
 
   public ngOnInit(): void {
     this.init();
+
+    const dataAtual = new Date();
+
+    this.relatorioForm = this.formBuilder.group({
+      data: { ano: dataAtual.getFullYear(), mes: (dataAtual.getMonth() + 1) }
+    });
   }
 
   public init(): void {
