@@ -4,7 +4,8 @@
     </div>
     <div>
         <form [formGroup]="relatorioForm" novalidate>
-            <app-month-datepicker formControlName="data"></app-month-datepicker>
+            <app-month-datepicker (dataAtualizada)="atualizarRelatorios()" formControlName="data">
+            </app-month-datepicker>
         </form>
     </div>
 </div>

@@ -13,25 +13,35 @@ export class RelatoriosComponent implements OnInit {
   public totalizadores!: TotalizadoresModel;
   public relatorioForm!: FormGroup;
 
+  private mesSelecionado: number = 0;
+  private anoSelecionado: number = 0;
+
   public constructor(
     private formBuilder: FormBuilder,
     private relatorioService: RelatorioService
   ) { }
 
   public ngOnInit(): void {
-    this.init();
-
     const dataAtual = new Date();
+    this.mesSelecionado = dataAtual.getMonth() + 1;
+    this.anoSelecionado = dataAtual.getFullYear();
 
     this.relatorioForm = this.formBuilder.group({
-      data: { ano: dataAtual.getFullYear(), mes: (dataAtual.getMonth() + 1) }
+      data: { ano: this.anoSelecionado, mes: this.mesSelecionado }
+    });
+
+    this.init(this.mesSelecionado, this.anoSelecionado);
+  }
+
+  public init(mes: number, ano: number): void {
+    this.relatorioService.obterTotalizadores(new TotalizadoresQuery(mes, ano)).subscribe((response) => {
+      this.totalizadores = TotalizadoresModel.toModel(response);
     });
   }
 
-  public init(): void {
-    this.relatorioService.obterTotalizadores(new TotalizadoresQuery()).subscribe((response) => {
-      this.totalizadores = TotalizadoresModel.toModel(response);
-    });
+  public atualizarRelatorios(): void {
+    const formValue = this.relatorioForm.value;
+    this.init(formValue.data.mes, formValue.data.ano);
   }
 
 }

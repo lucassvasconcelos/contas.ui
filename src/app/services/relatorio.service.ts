@@ -11,6 +11,6 @@ export class RelatorioService {
     public constructor(private http: HttpClient) { }
 
     public obterTotalizadores(qry: TotalizadoresQuery): Observable<TotalizadoresModel> {
-        return this.http.get<TotalizadoresModel>(`${environment.serviceUrl}/relatorios/totalizadores`);
+        return this.http.get<TotalizadoresModel>(`${environment.serviceUrl}/relatorios/totalizadores?mes=${qry.mes}&ano=${qry.ano}`);
     };
 }

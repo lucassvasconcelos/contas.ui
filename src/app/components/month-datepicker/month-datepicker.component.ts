@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,8 @@ interface IData {
 export class MonthDatePickerComponent implements ControlValueAccessor {
   @Input() public disabled = false;
   @Input() public mascara = "mm/yyyy";
+
+  @Output() public dataAtualizada: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('calendarPanel') public calendar!: NgbDropdown;
 
@@ -79,6 +81,7 @@ export class MonthDatePickerComponent implements ControlValueAccessor {
 
       this.data = { ano: iano, mes: imes };
       this.incr = this.getIncr(this.data.ano);
+      this.dataAtualizada.emit();
     }
 
     this.writeValue(this.data);
@@ -95,6 +98,7 @@ export class MonthDatePickerComponent implements ControlValueAccessor {
     else {
       this.data.mes = index + 1;
       this.dataTxt = this.formatarData(this.data);
+      this.dataAtualizada.emit();
       this.calendar.close();
     }
   }
