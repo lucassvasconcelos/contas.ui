@@ -1,0 +1,18 @@
+.totalizador {
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    padding: 30px 50px;
+}
+
+.totalizador-success {
+    background-color: #deffde;
+    border: 1px solid green;
+    color:green;
+}
+
+.totalizador-danger {
+    background-color: #ffe7e7;
+    border: 1px solid red;
+    color:red;
+}
