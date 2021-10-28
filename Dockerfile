@@ -10,7 +10,7 @@ COPY . .
 RUN npm install \
     && npm install -g @angular/cli
 
-RUN ng build --prod
+RUN ng b -c production
 
 FROM nginx
 
