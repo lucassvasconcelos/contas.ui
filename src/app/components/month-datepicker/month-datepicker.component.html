@@ -27,7 +27,7 @@
             <div *ngFor="let mes of meses; let i = index; let first = first; let last = last" class="col-4"
                 (click)="selecionar($event,i)">
                 <div [ngClass]="{
-                    'select': !somenteAnos ? (i+1)==data.mes : (i+incr) == data.ano,
+                    'select': !somenteAnos ? (i+1) === data.mes : (i+incr) === data.ano,
                     'outrange': somenteAnos && (first || last)
                 }" class="card-body">
                     <span *ngIf="!somenteAnos">{{mes}}</span>
