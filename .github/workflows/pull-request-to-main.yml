@@ -1,0 +1,30 @@
+name: Stable Version
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Nodejs Setup
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install Angular
+      run: npm i -g @angular/cli
+
+    - name: Install Dependencies
+      run: npm i
+
+    - name: Lint
+      run: ng l
+
+    - name: Build
+      run: ng b
