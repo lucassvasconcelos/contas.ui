@@ -24,7 +24,7 @@
             <label for="data">Data <strong class="required">*</strong></label>
             <div class="input-group">
                 <input class="form-control" placeholder="Data da Conta" name="dp" formControlName="data" ngbDatepicker
-                    #d="ngbDatepicker">
+                    #d="ngbDatepicker" readonly>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
                         <fa-icon [icon]="faCalendar"></fa-icon>
@@ -35,8 +35,8 @@
 
         <div class="form-group">
             <label for="valor">Valor <strong class="required">*</strong></label>
-            <input type="text" class="form-control" id="valor" aria-describedby="valor" placeholder="Valor da Conta"
-                formControlName="valor" required>
+            <input class="form-control" id="valor" currencyMask formControlName="valor" required
+                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
         </div>
 
         <div class="d-flex mb-3">

@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 import { AppComponent } from './app.component';
 import { NgbDateCustomAdapter } from './common/ngb-date-custom-adapter';
@@ -54,7 +55,8 @@ registerLocaleData(localePt);
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     NgxChartsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxCurrencyModule
   ],
   providers: [
     { provide: NgbDateAdapter, useClass: NgbDateCustomAdapter },
