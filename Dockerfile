@@ -1,4 +1,4 @@
-FROM node:15.8.0-alpine3.10 as node
+FROM node:16.13-alpine3.14 as node
 
 WORKDIR /app
 
@@ -16,3 +16,5 @@ FROM nginx
 
 COPY --from=node /app/dist/contas-ui/ /usr/share/nginx/html/
 COPY /nginx-custom.conf /etc/nginx/conf.d/default.conf
+
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
