@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { faCheck, faPencilAlt, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CategoriaModel } from 'src/app/models/categoria-model';
 import { ContaModel } from 'src/app/models/conta-model';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -34,7 +35,8 @@ export class ContasComponent implements OnInit {
   public constructor(
     modalService: NgbModal,
     contaService: ContaService,
-    categoriaService: CategoriaService
+    categoriaService: CategoriaService,
+    private spinner: NgxSpinnerService
   ) {
     this.modalService = modalService;
     this.contaService = contaService;
@@ -46,8 +48,11 @@ export class ContasComponent implements OnInit {
   }
 
   private async init(): Promise<void> {
+    this.spinner.show();
+
     await this.obterDados().then(() => {
       this.contas = this.contas.map((conta) => ContaModel.atribuirCategoria(conta, this.categorias));
+      this.spinner.hide();
     });
   }
 

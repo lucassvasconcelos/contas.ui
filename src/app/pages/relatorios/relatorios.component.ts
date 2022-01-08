@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LegendPosition } from '@swimlane/ngx-charts';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { GraficosModel } from 'src/app/models/relatorios/graficos-model';
 import { TotalizadoresModel } from 'src/app/models/relatorios/totalizadores-model';
 import { TotalizadoresQuery } from 'src/app/services/queries/relatorios/totalizadores-query';
@@ -23,7 +24,8 @@ export class RelatoriosComponent implements OnInit {
 
   public constructor(
     private formBuilder: FormBuilder,
-    private relatorioService: RelatorioService
+    private relatorioService: RelatorioService,
+    private spinner: NgxSpinnerService
   ) { }
 
   public ngOnInit(): void {
@@ -39,7 +41,10 @@ export class RelatoriosComponent implements OnInit {
   }
 
   private async init(mes: number, ano: number): Promise<void> {
+    this.spinner.show();
+
     await this.obterDados(mes, ano).then(() => {
+      this.spinner.hide();
     });
   }
 

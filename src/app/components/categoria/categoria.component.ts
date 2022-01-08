@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriaModel } from 'src/app/models/categoria-model';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -23,7 +24,8 @@ export class CriacaoCategoriaComponent implements OnInit {
   public constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private spinner: NgxSpinnerService
   ) {
     this.categoriaFormGroup = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -57,7 +59,9 @@ export class CriacaoCategoriaComponent implements OnInit {
       const c: CategoriaModel = Object.assign({}, this.categoria, this.categoriaFormGroup.value);
       const cmd = new CriarCategoriaCommand(environment.fakeUser.id, c.nome, c.descricao, +c.tipo);
 
+      this.spinner.show();
       this.categoriaService.criar(cmd).subscribe((response) => {
+        this.spinner.hide();
         this.toastr.info(`Categoria ${response.nome} criada com sucesso!`)
         this.closeEvent.emit();
       });
@@ -69,7 +73,9 @@ export class CriacaoCategoriaComponent implements OnInit {
       const c: CategoriaModel = Object.assign({}, this.categoria, this.categoriaFormGroup.value);
       const cmd = new AtualizarCategoriaCommand(String(this.categoria?.id), environment.fakeUser.id, c.nome, c.descricao, +c.tipo);
 
+      this.spinner.show();
       this.categoriaService.atualizar(cmd).subscribe((response) => {
+        this.spinner.hide();
         this.toastr.info(`Categoria ${response.nome} atualizada com sucesso!`)
         this.closeEvent.emit();
       });

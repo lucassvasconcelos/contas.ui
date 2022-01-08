@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { NgbDateCustomAdapter } from 'src/app/common/ngb-date-custom-adapter';
 import { StringHelper } from 'src/app/common/string-helper';
@@ -33,7 +34,8 @@ export class CriacaoContaComponent implements OnInit {
     private toastr: ToastrService,
     private ngbDateCustomAdapter: NgbDateCustomAdapter,
     private contaService: ContaService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private spinner: NgxSpinnerService
   ) {
     this.contaFormGroup = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -94,7 +96,9 @@ export class CriacaoContaComponent implements OnInit {
       const c: ContaModel = Object.assign({}, this.conta, this.contaFormGroup.value);
       const cmd = new CriarContaCommand(environment.fakeUser.id, c.nome, c.data, +c.valor, c.parcelado, +c.numeroParcelas, c.observacao, c.idCategoria);
 
+      this.spinner.show();
       this.contaService.criar(cmd).subscribe((response) => {
+        this.spinner.hide();
         this.toastr.info(`Conta ${response.nome} criada com sucesso!`)
         this.closeEvent.emit();
       });
@@ -106,7 +110,9 @@ export class CriacaoContaComponent implements OnInit {
       const c: ContaModel = Object.assign({}, this.conta, this.contaFormGroup.value);
       const cmd = new AtualizarContaCommand(String(this.conta?.id), environment.fakeUser.id, c.nome, c.data, +c.valor, c.parcelado, +c.numeroParcelas, c.observacao, c.idCategoria);
 
+      this.spinner.show();
       this.contaService.atualizar(cmd).subscribe((response) => {
+        this.spinner.hide();
         this.toastr.info(`Conta ${response.nome} atualizada com sucesso!`)
         this.closeEvent.emit();
       });

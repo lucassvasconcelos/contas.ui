@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ContaModel } from 'src/app/models/conta-model';
 import { DeletarContaCommand } from 'src/app/services/commands/contas/deletar-conta-command';
@@ -19,7 +20,8 @@ export class DelecaoContaComponent {
 
   public constructor(
     toastr: ToastrService,
-    contaService: ContaService
+    contaService: ContaService,
+    private spinner: NgxSpinnerService
   ) {
     this.toastr = toastr;
     this.contaService = contaService;
@@ -28,7 +30,9 @@ export class DelecaoContaComponent {
   public deletar(): void {
     const cmd = new DeletarContaCommand(String(this.conta?.id));
 
+    this.spinner.show();
     this.contaService.deletar(cmd).subscribe((response) => {
+      this.spinner.hide();
       this.toastr.info("Conta deletada com sucesso");
       this.closeEvent.emit();
     });

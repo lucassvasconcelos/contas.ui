@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { faPencilAlt, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CategoriaModel } from 'src/app/models/categoria-model';
 import { TipoCategoriaEnum } from 'src/app/models/enums/tipo-categoria';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -28,7 +29,8 @@ export class CategoriasComponent implements OnInit {
 
   public constructor(
     modalService: NgbModal,
-    categoriaService: CategoriaService
+    categoriaService: CategoriaService,
+    private spinner: NgxSpinnerService
   ) {
     this.modalService = modalService;
     this.categoriaService = categoriaService;
@@ -39,9 +41,12 @@ export class CategoriasComponent implements OnInit {
   }
 
   public init(): void {
+    this.spinner.show();
+
     this.categoriaService.obterTodas(new CategoriasQuery())
       .subscribe((response) => {
         this.categorias = response;
+        this.spinner.hide();
       })
   }
 

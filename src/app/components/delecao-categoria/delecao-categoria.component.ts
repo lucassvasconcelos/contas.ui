@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriaModel } from 'src/app/models/categoria-model';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -18,7 +19,8 @@ export class DelecaoCategoriaComponent {
 
   public constructor(
     toastr: ToastrService,
-    categoriaService: CategoriaService
+    categoriaService: CategoriaService,
+    private spinner: NgxSpinnerService
   ) {
     this.toastr = toastr;
     this.categoriaService = categoriaService;
@@ -27,7 +29,9 @@ export class DelecaoCategoriaComponent {
   public deletar(): void {
     const cmd = new DeletarCategoriaCommand(String(this.categoria?.id));
 
+    this.spinner.show();
     this.categoriaService.deletar(cmd).subscribe((response) => {
+      this.spinner.hide();
       this.toastr.info("Categoria deletada com sucesso");
       this.closeEvent.emit();
     });
