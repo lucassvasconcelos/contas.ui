@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-between">
+<div class="mt-5 d-flex justify-content-around">
     <div class="totalizador totalizador-success d-flex flex-column align-items-center">
         <span>Receitas</span>
         <span>{{ totalizadores?.totalReceitas | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
@@ -25,7 +25,15 @@
         <span>{{ totalizadores?.total | currency:'BRL':'symbol':'1.2-2':'pt' }}</span>
     </div>
 </div>
-<div class="mt-5">
+<div class="mt-5 d-flex flex-column align-items-center" *ngIf="totalizadores.total === 0">
+    <div id="alert" class=" mt-5">
+        <fa-icon [icon]="faExclamationCircle"></fa-icon>
+    </div>
+    <div class="mt-5">
+        <h3>Dados não encontrados para o período selecionado!</h3>
+    </div>
+</div>
+<div class="mt-5 d-flex justify-content-center" *ngIf="totalizadores.total > 0">
     <ngx-charts-pie-chart [results]="dadosValorTotalPorCategoria" [legend]="true" [legendTitle]="'Legenda'"
         [view]="[1000,500]" [labels]="true" [legendPosition]="legendPosition.Below" [gradient]="true">
     </ngx-charts-pie-chart>

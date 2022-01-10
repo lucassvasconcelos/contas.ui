@@ -1,7 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { faCheck, faPencilAlt, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCommentDots, faPencilAlt, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { StringHelper } from 'src/app/common/string-helper';
 import { CategoriaModel } from 'src/app/models/categoria-model';
 import { ContaModel } from 'src/app/models/conta-model';
 import { CategoriaService } from 'src/app/services/categoria.service';
@@ -17,12 +18,14 @@ import { ContasQuery } from 'src/app/services/queries/contas/contas-query';
 export class ContasComponent implements OnInit {
   @ViewChild('modalConta') public modalConta!: TemplateRef<HTMLElement>;
   @ViewChild('modalDelecaoConta') public modalDelecaoConta!: TemplateRef<HTMLElement>;
+  @ViewChild('modalObservacao') public modalObservacao!: TemplateRef<HTMLElement>;
 
   public faCheck: any = faCheck;
   public faTimes: any = faTimes;
   public faPlus: any = faPlus;
   public faTrash: any = faTrash;
   public faPencil: any = faPencilAlt;
+  public faCommentDots: any = faCommentDots;
 
   public contas: ContaModel[] = [];
   public categorias: CategoriaModel[] = [];
@@ -82,6 +85,15 @@ export class ContasComponent implements OnInit {
   public deletarConta(conta: ContaModel): void {
     this.contaSelecionada = conta;
     this.modalService.open(this.modalDelecaoConta, { centered: true, size: 'lg' });
+  }
+
+  public visualizarObservacao(conta: ContaModel): void {
+    this.contaSelecionada = conta;
+    this.modalService.open(this.modalObservacao, { centered: true, size: 'lg' });
+  }
+
+  public existeObservacao(conta: ContaModel): boolean {
+    return !StringHelper.isNullOrEmpty(conta.observacao);
   }
 
   public dismissAll(): void {

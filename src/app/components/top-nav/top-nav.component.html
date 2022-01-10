@@ -1,0 +1,20 @@
+<nav>
+    <div class="d-flex">
+        <div>
+            <a id="brand" href="javascript:void(0)">Contas UI</a>
+        </div>
+        <div id="top-menu" class="w-100">
+            <div id="hamburger" class="h-100">
+                <button class="btn btn-gold" (click)="sendCollapseEvent()">
+                    <fa-icon [icon]="faBars"></fa-icon>
+                </button>
+            </div>
+            <div id="profile">
+                <span>usuario@contas.com</span>
+                <div id="user">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

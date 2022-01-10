@@ -4,7 +4,7 @@
 
 html, 
 body {
-    height: 100%;
+    height: calc(100% - 60px);
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
 }
@@ -30,4 +30,28 @@ h6 {
 
 .required {
     color:red;
+}
+
+.table-scroll {
+    height: calc(100vh - 194px);
+    overflow: auto;
+}
+
+.table-row-count {
+    bottom: 0;
+    margin-bottom: 10px;
+    position: fixed;
+    width: 100%;
+}
+
+.btn-gold {
+    color: #fff;
+    background-color: #f6a821;
+    border-color: #f6a821;
+}
+
+.btn-gold:hover {
+    color: #fff;
+    background-color: #d8941e;
+    border-color: #d8941e;
 }

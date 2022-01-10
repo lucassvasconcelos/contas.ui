@@ -9,29 +9,22 @@
     </div>
 </div>
 <div class="table-responsive table-scroll">
-    <table class="table table-striped">
+    <table class="table table-sm table-striped text-center">
         <thead>
             <tr>
-                <th>Categoria</th>
                 <th>Nome</th>
                 <th>Data</th>
-                <th>Valor</th>
                 <th>Parcelado</th>
                 <th>Nº Parcelas</th>
+                <th>Categoria</th>
+                <th>Valor</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let conta of contas">
-                <td *ngIf="conta?.categoria?.tipo === 1">
-                    <span class="badge badge-pill badge-success">{{ conta?.categoria?.nome }}</span>
-                </td>
-                <td *ngIf="conta?.categoria?.tipo === 2">
-                    <span class="badge badge-pill badge-danger">{{ conta?.categoria?.nome }}</span>
-                </td>
                 <td>{{ conta.nome }}</td>
                 <td>{{ conta.data | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ conta.valor | currency:'BRL':'symbol':'1.2-2':'pt' }}</td>
                 <td *ngIf="conta.parcelado" class="text-success">
                     <fa-icon [icon]="faCheck"></fa-icon>
                 </td>
@@ -39,7 +32,18 @@
                     <fa-icon [icon]="faTimes"></fa-icon>
                 </td>
                 <td>{{ conta.numeroParcelas === 0 ? '-' : conta.numeroParcelas }}</td>
+                <td *ngIf="conta?.categoria?.tipo === 1">
+                    <span class="badge badge-pill badge-success">{{ conta?.categoria?.nome }}</span>
+                </td>
+                <td *ngIf="conta?.categoria?.tipo === 2">
+                    <span class="badge badge-pill badge-danger">{{ conta?.categoria?.nome }}</span>
+                </td>
+                <td>{{ conta.valor | currency:'BRL':'symbol':'1.2-2':'pt' }}</td>
                 <td class="text-right">
+                    <button class="btn btn-sm btn-info mr-2" (click)="visualizarObservacao(conta)"
+                        [disabled]="!existeObservacao(conta)">
+                        <fa-icon [icon]="faCommentDots"></fa-icon>
+                    </button>
                     <button class="btn btn-sm btn-primary mr-2" (click)="editarConta(conta)">
                         <fa-icon [icon]="faPencil"></fa-icon>
                     </button>
@@ -51,7 +55,7 @@
         </tbody>
     </table>
 </div>
-<div class="mt-2">
+<div class="table-row-count">
     <strong>Quantidade: {{ contas.length }} {{ contas.length === 1 ? 'conta' : 'contas' }}</strong>
 </div>
 
@@ -61,4 +65,8 @@
 
 <ng-template #modalDelecaoConta>
     <app-delecao-conta [conta]="contaSelecionada" (closeEvent)="dismissAll()"></app-delecao-conta>
+</ng-template>
+
+<ng-template #modalObservacao>
+    <app-observacao-conta [conta]="contaSelecionada" (closeEvent)="dismissAll()"></app-observacao-conta>
 </ng-template>

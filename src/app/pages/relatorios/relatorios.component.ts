@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { LegendPosition } from '@swimlane/ngx-charts';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraficosModel } from 'src/app/models/relatorios/graficos-model';
@@ -13,7 +14,9 @@ import { RelatorioService } from 'src/app/services/relatorio.service';
   styleUrls: ['./relatorios.component.scss']
 })
 export class RelatoriosComponent implements OnInit {
-  public totalizadores!: TotalizadoresModel;
+  public faExclamationCircle: any = faExclamationCircle;
+
+  public totalizadores: TotalizadoresModel;
   public relatorioForm!: FormGroup;
 
   public dadosValorTotalPorCategoria: GraficosModel[] = [];
@@ -26,7 +29,9 @@ export class RelatoriosComponent implements OnInit {
     private formBuilder: FormBuilder,
     private relatorioService: RelatorioService,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {
+    this.totalizadores = new TotalizadoresModel(0, 0);
+  }
 
   public ngOnInit(): void {
     const dataAtual = new Date();
